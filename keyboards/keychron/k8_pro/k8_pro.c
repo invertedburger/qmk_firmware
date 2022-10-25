@@ -15,6 +15,7 @@
  */
 
 #include "k8_pro.h"
+#include "raw_hid.h"
 #ifdef BLUETOOTH_ENABLE
 #    include "ckbt51.h"
 #    include "bluetooth.h"
@@ -285,11 +286,12 @@ void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
             factory_test_rx(data, length);
             break;
 #endif
-    }
+    } 
 }
 
 #if !defined(VIA_ENABLE)
 void raw_hid_receive(uint8_t *data, uint8_t length) {
+    raw_hid_send(data, length);
     switch (data[0]) {
         case RAW_HID_CMD:
             raw_hid_receive_kb(data, length);
